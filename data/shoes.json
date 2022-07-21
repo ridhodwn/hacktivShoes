@@ -1,0 +1,75 @@
+[
+  {
+    "id": 1,
+    "name": "Adidas Trae Young 1",
+    "BrandId": 1,
+    "usedBy": "Trae Young",
+    "description": "An exciting development in the world of basketball shoes of 2021-2022 is the arrival of Trae Young's debut signature shoe. The adidas Trae Young 1 comes with a couple of unique style points. Firstly, the low-top silhouette features a laceless construction (though you can tighten up with laces if needed) but the real attraction here is the sole unit. The multi-directional ridged outsole sticks you to the hardwood while the ergonomic midsole offers support and comfort where you need it.",
+    "photo": "https://www.highsnobiety.com/static-assets/thumbor/HX5sxv5q4b1SfAvKFbM38VcM618=/1500x1000/whatdropsnow.s3.amazonaws.com/product_image/185192/shrine_image/666fc0fd58132056c82038d8a3ff2c03.jpg",
+    "price": 130
+  },
+  {
+    "id": 2,
+    "name": "Adidas Dame 8",
+    "BrandId": 1,
+    "usedBy": "Damian Lillard",
+    "description": "Nowadays, almost all of the best basketball shoes fall under the name of an NBA superstar. From Mitchell, we move to Portland's talisman Damian Lillard whose adidas Dame 8 has just hit the market, succeeding the fan-favorite Dame 7. This time the shoe comes made of production waste to reduce the use of virgin materials. You'll find dual-density Bounce Pro cushioning throughout that ensures that the Dame 8 loses none of the lightweight, fast reactions that made the Dame 7 so popular.",
+    "photo": "https://www.highsnobiety.com/static-assets/thumbor/oVUkHWtrqgdoUm7KamYALslU4Sg=/1500x1000/whatdropsnow.s3.amazonaws.com/product_image/185740/shrine_image/c0d08529cc9eaca33f54f92ff6abaf87.jpg",
+    "price": 120
+    
+  },
+  {
+    "id": 3,
+    "name": "Adidas Haden Vol. 6",
+    "BrandId": 1,
+    "usedBy": "James Harden",
+    "description": "From the new guard to one of the most respected players in the league right now: The Beard. James Harden's long-range game is matched by his equally aggressive, equally effective under-the-rim play, so his signature shoes need to suit all play types. Based on a Boost midsole, the Harden Vol.6 feels ultra-responsive and lightweight, aided by bands to the forefoot and heel which hold your foot in place so there's no delay between reaction and movement.",
+    "photo": "https://www.highsnobiety.com/static-assets/thumbor/CbWCoFw9LCbz5MUW2XCshresMSk=/1500x1000/whatdropsnow.s3.amazonaws.com/product_image/186804/shrine_image/2de68db7a6c45223cb7eddde213c2531.jpg",
+    "price": 140
+  },
+  {
+    "id": 4,
+    "name": "Adidas Donovan Mitchell D.O.N. Issue 3",
+    "BrandId": 1,
+    "usedBy": "Donovan Mitchell",
+    "description": "Donovan Mitchell left his mark on the basketball shoes market about as quickly as he did the NBA as a whole. The young star gets stronger every season and his D.O.N. line follows suit. Issue 3 is the most popular of the range thanks to Lightstrike cushioning working in tandem with abrasion-resistant TPU to the outsole which provide the support and grip needed to rack up big numbers. This Louisville pair commemorates Mitchell's time as a Louisville Cardinal.",
+    "photo": "https://www.highsnobiety.com/static-assets/thumbor/qCl43Er3WT80Aqlu42LEullZmlo=/1500x1000/whatdropsnow.s3.amazonaws.com/product_image/186803/shrine_image/c34be464684e3232c347f8c374b09331.jpg",
+    "price": 88
+  },
+  {
+    "id": 5,
+    "name": "Nike PG 5",
+    "BrandId": 2,
+    "usedBy": "Paul George",
+    "description": "One of the useful aspects of a shoe game dominated by signature designs is that you can match your style of play to the star you're closest to and be fairly sure you'll get what you need. If you're a steady anchor who looks for the right moment to strike, the PG 5 is ideal. Notice the big Nike Air Strobel midsole cushion from front to back — this pair is for the hooper who works in top gear all game long.",
+    "photo": "https://www.highsnobiety.com/static-assets/thumbor/VWiS8FLqjM71y0mqISCMYSFMweo=/1500x1000/whatdropsnow.s3.amazonaws.com/product_image/180302/shrine_image/f638257894494d79ce6b87a0fbf3f75d.jpg",
+    "price": 90
+  },
+  {
+    "id": 6,
+    "name": "Nike Air Zoom G.T. Run",
+    "BrandId": 2,
+    "usedBy": "Rudy Gobert",
+    "description": "One of Nike's most popular new arrivals in the basketball category is the G.T. Run. This is a 'check us out' move from the Swoosh, incorporating everything at their disposal. Multi-layered cushioning from React inserts and a Zoom Air unit in the forefoot begin the tech barrage. A two-layer upper combines lightweight mesh with a haptic print layer for durability while the sole unit features cutaways and perforations under the arch to reduce weight without losing any grip. We could go on but to cut a long story short: expect to see a lot of these over the coming months",
+    "photo": "https://www.highsnobiety.com/static-assets/thumbor/I4NcGC-NoWACfFYtWTcS5L_aE8U=/1500x1000/whatdropsnow.s3.amazonaws.com/product_image/183124/shrine_image/c31ce0b604b3a78f354db7cad9dc0411.jpg",
+    "price": 120
+  },
+  {
+    "id": 7,
+    "name": "PUMA MB.01 Shoes",
+    "BrandId": 3,
+    "usedBy": "LaMelo Ball",
+    "description": "Love them or hate them, the Balls are a central part of the NBA now, so it's an exciting development to see LaMelo Ball's first signature sneaker hit shelves. Made for PUMA, the MB.01 incorporates LaMelo's bold personal style in color choice and detailing as well as high-performance aspects to match. Nitro Foam cushioning throughout the sole unit works perfectly for explosive play styles and is compounded by full engineered traction to the outsole for quick cuts.",
+    "photo": "https://www.highsnobiety.com/static-assets/thumbor/-G98kItGx8U0Uh0osKUuVMs5Pbk=/1500x1000/whatdropsnow.s3.amazonaws.com/product_image/182723/shrine_image/969cbf965b4ef9b413d03d331fb9e2b1.jpg",
+    "price": 216
+  },
+  {
+    "id": 8,
+    "name": "Under Armour Curry 9",
+    "BrandId": 4,
+    "usedBy": "Stephen Curry",
+    "description": "The shoe features Under Armour’s Flow cushioning/ traction system (as does the Curry 8). Flow offers great impact protection and a seamless ride from heel to toe. It feels almost like a running shoe that has been beefed up to be able to play basketball in them. The Curry 9 also features an improved and more supportive upper as well as a more solid torsional plate in the midfoot",
+    "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRq-xQhe1lFmr5tF6uiB90uC85UmhwrVtA0w&usqp=CAU",
+    "price": 160
+  }
+]

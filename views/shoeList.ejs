@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="shortcut icon" href="#">
+    <title>Shoe List</title>
+</head>
+<body>
+    <%- include('partials/navbar.ejs') %> 
+    <h1 class="text-center">Shoe List</h1>
+    <div class="container">
+        <div class="form-group">
+            <form>
+                <input type="text" name="search" class="form-control" placeholder="Input shoe name here ..."> <br>
+                <div class="text-center">
+                    <button class="btn btn-primary text-center" >Search!</button>
+                </div>
+            </form>
+        </div>
+    </div><br>
+    <div class="text-center">
+        <a href="/shoes/add">
+            <button class="btn btn-success">Add New Shoe</button>
+        </a>
+    </div><br>
+    <div class="container">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Shoe Name</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Price</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% shoesData.forEach(el => { %> 
+                    <tr>
+                        <td>
+                            <img src="<%= el.photo %>" alt="meme pic" style="max-width: 200px;">
+                        </td>
+                        <td><%= el.name %></td>
+                        <td><%= el.Brand.name %></td>
+                        <td><%= el.stock %></td>
+                        <td><%= el.price %></td>
+                        <td>
+                            <a href="/shoes/<%= el.id %>/buy">
+                                <button class="btn btn-primary">Buy!</button>
+                            </a>
+                        </td>
+                    </tr>
+                <% }) %> 
+            </tbody>
+          </table>
+    </div>
+</body>
+</html>
