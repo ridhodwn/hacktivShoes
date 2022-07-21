@@ -14,7 +14,8 @@ app.use(session({
     cookie: { 
         secure: false,
     }
-  }))
+}))
+app.use(express.static("."));
 app.use(router) ;
 // app.get('/shoes', Controller.home)
 

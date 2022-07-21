@@ -10,11 +10,15 @@
 // console.log(bcrypt.compareSync("angga", hash));
 // console.log(bcrypt.compareSync("angg", hash));
 
-const {Shoe, Brand, User, Transactions, Profile} = require('./models') ;
-Transactions.findOne({
-    where: {
-        ShoeId: 1
-    }
-})
-    .then(t => console.log(t))
-    .catch(err => console.log(err))
+// const {Shoe, Brand, User, Transactions, Profile} = require('./models') ;
+// Transactions.findOne({
+//     where: {
+//         ShoeId: 1
+//     }
+// })
+//     .then(t => console.log(t))
+//     .catch(err => console.log(err))
+
+let date = new Date()
+
+console.log(date.getTime());

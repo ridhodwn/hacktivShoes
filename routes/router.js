@@ -3,7 +3,7 @@ const router = require('express').Router();
 // const session = require('express-session')
 
 
-
+router.get('/', Controller.home)
 //Register
 router.get('/register', Controller.register)
 router.post('/register', Controller.postRegister)
@@ -44,10 +44,13 @@ const isGuest = function (req, res, next) {
     }
 }
 
-router.get('/', Controller.home)
+
 router.get('/brands', Controller.brandList)
 router.get('/brands/:id', Controller.shoesByBrand)
 router.get('/cart', isGuest, Controller.cart)
+router.get('/cart/:userId/delete/:shoeId', isGuest, Controller.deleteFromCart)
+router.get('/cart/:userId/reduce/:shoeId', isGuest, Controller.reduceFromCart)
+router.get('/invoice/:userId', isGuest, Controller.printInvoice)
 router.get('/shoes', Controller.shoeList)
 router.get('/shoes/add', isAdmin, Controller.addNewShoe)
 router.post('/shoes/add', Controller.saveAddedShoe)

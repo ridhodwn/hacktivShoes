@@ -1,14 +1,16 @@
 const {Shoe, Brand, User, Transactions, Profile} = require('../models') ;
-const { Op } = require("sequelize");
+const { Op, Model } = require("sequelize");
 const bcrypt = require('bcryptjs');
+const {priceToRupiah, dateFormatter} = require('../helpers/helper') ;
+const printInvoice = require('../invoices/index')
 
 class Controller {
     static home(req, res){
-        res.render('home')
+        const role = req.session.role
+        res.render('home', {role})
     }
 
     static brandList(req, res){
-        console.log('ini brands');
         Brand.findAll({
             order: [['id', 'ASC']]
         })
@@ -23,8 +25,7 @@ class Controller {
     }
 
     static shoeList(req, res){
-        // console.log(req.session, 'INI DARI SHOELIST');
-        const {search, error} = req.query ;
+        const {search, error, emptyList} = req.query ;
         const role = req.session.role
         let option = {
             order: [['id', 'asc']],
@@ -36,6 +37,19 @@ class Controller {
             },
             where : {}
         }
+        if(!emptyList){
+            option.where = {...option.where, 
+                stock:{
+                    [Op.gt]: 0
+                }
+            }
+        } else {
+            option.where = {...option.where, 
+                stock:{
+                    [Op.eq]: 0
+                }
+            }
+        }
         if(search){
             option.where = {...option.where, 
                 name:{
@@ -45,15 +59,15 @@ class Controller {
         }
         Shoe.findAll(option)
             .then(shoes => {
-                // console.log(shoes);
                 const shoesData = shoes.map(el => {
                     const {id, name, photo, price, Brand, stock} = el ;
-                    return {id, name, photo, price, Brand, stock}
+                    return {id, name, photo, price: priceToRupiah(price), Brand, stock}
                 })
-                // console.log(shoesData);
                 return res.render('shoeList', {shoesData, error, role})
             })
-            .catch(err => res.send(err))
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     static buyShoe(req, res){
@@ -135,12 +149,11 @@ class Controller {
             }
         })
             .then(brand => {
-                // console.log(brand);
                 const {id, name, Shoes} = brand ;
                 const brandData = {id, name} ;
                 const shoesData = Shoes.map(el => {
                     const {id, name, photo, price, stock} = el ;
-                    return {id, name, photo, price, stock}
+                    return {id, name, photo, price: priceToRupiah(price), stock}
                 })
                 return res.render('shoeByBrand', {brandData, shoesData});
             })
@@ -186,7 +199,16 @@ class Controller {
         const input = {name, usedBy, description, photo, price, stock, BrandId} ;
         Shoe.create(input)
             .then(() => res.redirect('/shoes')) 
-            .catch(err => res.send(err))
+            .catch(err => {
+                if(err.name === "SequelizeValidationError"){
+                    const errors = err.errors.map(el => {
+                        return el.message ;
+                    })
+                    res.redirect(`/shoes/add?error=${errors.join(';')}`)
+                } else {
+                    res.send(err)
+                }
+            })
     }
 
     static register(req, res){
@@ -199,7 +221,16 @@ class Controller {
         const input = {username, email, password, role} ;
         User.create(input)
             .then(() => res.redirect('/shoes'))
-            .catch(err => res.send(err))
+            .catch(err => {
+                if(err.name === "SequelizeValidationError"){
+                    const errors = err.errors.map(el => {
+                          return el.message ;
+                      })
+                      res.redirect(`/register?error=${errors.join(';')}`)
+                  } else {
+                      res.send(err)
+                  }
+            })
     }
 
     static login(req, res){
@@ -218,17 +249,16 @@ class Controller {
         })
             .then(user => {
                 if(!user){
-                    const error = `Please register first`
-                    return res.redirect(`/register?error=${error}`)
+                    const error = `Invalid username/password!`
+                    return res.redirect(`/login?error=${error}`)
                 } else {
                     const {id, role} = user ;
-                    isFound= true
                     userId = id
                     const isTrue = bcrypt.compareSync(password, user.password)
                     if(isTrue){
+                        isFound= true
                         req.session.userId = id
                         req.session.role = role
-                        // console.log(req.session, 'INI DARI CONTROLLER');
                         return Profile.findOne({
                             where: {
                                 UserId: id
@@ -249,7 +279,16 @@ class Controller {
                     }
                 }
             })
-            .catch(err => res.send(err))
+            .catch(err => {
+                if(err.name === "SequelizeValidationError"){
+                  const errors = err.errors.map(el => {
+                        return el.message ;
+                    })
+                    res.redirect(`/login?error=${errors.join(';')}`)
+                } else {
+                    res.send(err)
+                }
+            })
     }
 
     static logOut(req, res){
@@ -269,11 +308,10 @@ class Controller {
     }
 
     static saveAddedProfile(req, res){
-        const {name, location, photo} = req.body ;
+        const {name, address, city, state, country, postalCode, photo} = req.body ;
         const {userId} = req.params ;
-        // console.log(userId);
         Profile.create({
-            name, location, photo, UserId:userId
+            name, address, city, state, country, postalCode, photo, UserId:userId
         })
         .then(() => res.redirect('/shoes'))
         .catch(err => res.send(err))
@@ -288,8 +326,8 @@ class Controller {
             }
         })
             .then(profile => {
-                const{id, name, location, photo} = profile;
-                res.render('profileDetail', {id, name, location, photo, error})
+                const{id, name, address, city, state, country, postalCode, photo} = profile;
+                res.render('profileDetail', {id, name, address, city, state, country, postalCode, photo, error})
             })
     }
 
@@ -310,7 +348,6 @@ class Controller {
 
     static cart(req, res){
         const userId = req.session.userId
-        let itemsData = "" ;
         User.findOne({
             where:{
                 id: +userId
@@ -326,16 +363,11 @@ class Controller {
                 const{id, Shoes, Profile} = x ;
                 let totalAmount = 0
                 const shoesData = Shoes.map(el => {
-                    // console.log(el);
                     const {id, price, name, Transactions, photo} = el ;
-                    // console.log(Transactions);
-                    // console.log(Transactions.totalPrice);
                     const {amount} = Transactions
-                    // Transactions.totalPrice(price) ;
                     totalAmount += amount
-                    return {photo, id, price, name, totalPrice:Transactions.totalPrice(price, amount), amount}
+                    return {photo, id, price:priceToRupiah(price), name, totalPrice:priceToRupiah(Transactions.totalPrice(price, amount)), amount}
                 })
-                // console.log(Profile);
                 const caption = User.generateCaption(Profile.name, totalAmount)
                 res.render('cart', {shoesData, Profile, caption, userId})
 
@@ -343,6 +375,84 @@ class Controller {
             .catch(err => {
                 console.log(err);
             })
+    }
+    static deleteFromCart(req, res){
+        const {shoeId, userId} = req.params
+        let shoeStock = 0
+        Transactions.destroy({
+            where: {
+                UserId: userId,
+                ShoeId: shoeId
+            }
+        })
+            .then(() => {
+                return Shoe.findOne({
+                    where:{
+                        id: +shoeId
+                    },
+                    attributes: ['stock']
+                })
+            })
+            .then(shoe => {
+                const{ stock } = shoe ;
+                shoeStock = Number(stock) + 1 ;
+                return Shoe.update({
+                    stock: shoeStock
+                }, {
+                    where : {
+                        id: +shoeId
+                    }
+                })
+            })
+            .then(() => res.redirect('/cart'))
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    static reduceFromCart(req, res){
+        const {shoeId, userId} = req.params
+        let shoeStock = 0
+        Shoe.findOne({
+            where:{
+                id: +shoeId
+            },
+            attributes: ['stock']
+        })
+            .then(shoe => {
+                const{ stock } = shoe ;
+                shoeStock = Number(stock) + 1 ;
+                return Shoe.update({
+                    stock: shoeStock
+                }, {
+                    where : {
+                        id: +shoeId
+                    }
+                })
+            })
+            .then(() => {
+                return Transactions.findOne({
+                    where:{
+                        UserId: userId,
+                        ShoeId: shoeId
+                    },
+                    attributes: ["amount"]
+                })
+            })
+            .then(trans => {
+                const {amount} = trans ;
+                let newAmount = Number(amount) - 1 
+                return Transactions.update({
+                    amount: +newAmount
+                }, {
+                    where: {
+                        UserId: userId,
+                        ShoeId: shoeId
+                    }
+                })
+            })
+            .then(() => res.redirect('/cart'))
+            .catch(err => res.send(err))
     }
 
     static editShoe(req, res){
@@ -383,8 +493,55 @@ class Controller {
             }
         })
             .then(() => res.redirect('/shoes'))
-            .catch(err => res.send(err))
+            .catch(err => {
+                if(err.name === "SequelizeValidationError"){
+                    const errors = err.errors.map(el => {
+                        return el.message ;
+                    })
+                    res.redirect(`/shoes/edit/${shoeId}?error=${errors.join(';')}`)
+                } else {
+                    res.send(err)
+                }
+            })
     }
+
+    static printInvoice(req, res){
+        const{userId} = req.params ;
+        let itemsData = "" ;
+        User.findOne({
+            where:{
+                id: +userId
+            },
+            include: [{
+                model: Shoe,
+                attributes: ["id", "name", "price", "photo"]
+            }, {
+                model: Profile,
+            }]
+        })
+            .then(x => {
+                const{id, Shoes, Profile} = x ;
+                let totalPrice = 0
+                const shoesData = Shoes.map(el => {
+                    const {id, price, name, Transactions} = el ;
+                    const {amount} = Transactions
+                    totalPrice += price
+                    return {id, price, description:name, quantity:amount}
+                })
+                const {name, address, city, state, country, postalCode} = Profile ;
+                const profileFix = {name, address, city, state, country, postalCode}
+                const orderNumber = Number(User.generateOrderNumber(id))
+                let dataFix = {shoesData, profileFix, totalPrice, orderNumber}
+                printInvoice(dataFix)
+                res.redirect(`/${profileFix.name}.pdf`)
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+
 }
 
 module.exports = Controller

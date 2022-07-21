@@ -18,13 +18,96 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Shoe.init({
-    name: DataTypes.STRING,
-    usedBy: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    photo: DataTypes.TEXT,
-    price: DataTypes.INTEGER,
-    BrandId: DataTypes.INTEGER,
-    stock: DataTypes.INTEGER,
+    name: {
+      type:DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull:{
+          msg: `Shoe name cannot be empty!`
+        },
+        notEmpty:{
+          msg: `Shoe name cannot be empty!`
+        }
+      }
+    },
+    usedBy: {
+      type:DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull:{
+          msg: `Athlete that endorse the shoes cannot be empty!`
+        },
+        notEmpty:{
+          msg: `Athlete that endorse the shoes cannot be empty!`
+        }
+      }
+    },
+    description: {
+      type:DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull:{
+          msg: `Please fill the shoe description!`
+        },
+        notEmpty:{
+          msg: `Please fill the shoe description!`
+        }
+      }
+    },
+    photo: {
+      type:DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull:{
+          msg: `Please provide URL for shoe's photo!`
+        },
+        notEmpty:{
+          msg: `Please provide URL for shoe's photo!`
+        }
+      }
+    },
+    price: {
+      type:DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull:{
+          msg: `Price cannot be empty!`
+        },
+        notEmpty:{
+          msg: `Price cannot be empty!`
+        }, min: {
+          args: [100000],
+          msg: `Minimum price is Rp 100.000!`
+        }
+      }
+    },
+    BrandId: {
+      type:DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull:{
+          msg: `Please fill the brand of the shoe!`
+        },
+        notEmpty:{
+          msg: `Please fill the brand of the shoe!`
+        }
+      }
+    },
+    stock: {
+      type:DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull:{
+          msg: `Stock amount cannot be empty!`
+        },
+        notEmpty:{
+          msg: `Stock amount cannot be empty!`
+        }, min: {
+          args: [0],
+          msg: `Minimum stock is 0 pair!`
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'Shoe',
