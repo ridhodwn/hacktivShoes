@@ -10,7 +10,11 @@
 <body>
     <%- include('partials/navbar.ejs') %> 
     <br>
-    <h1 class="text-center">Brand : <%= brandData.name %> </h1>
+    <h1 class="text-center">Your Shopping Cart</h1>
+
+    <div class="text-center">
+        <h3><%= caption %> </h3>
+    </div>
     <br>
     <div class="container">
         <table class="table">
@@ -18,29 +22,30 @@
               <tr>
                 <th scope="col">Image</th>
                 <th scope="col">Shoe Name</th>
-                <th scope="col">Stock</th>
-                <th scope="col">Price</th>
-                <th scope="col">Action</th>
+                <th scope="col">Price per pcs</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Total Price</th>
               </tr>
             </thead>
             <tbody>
                 <% shoesData.forEach(el => { %> 
                     <tr>
                         <td>
-                            <img src="<%= el.photo %>" alt="meme pic" style="max-width: 200px;">
+                            <img src="<%= el.photo %>" alt="Shoes pic" style="max-width: 200px;">
                         </td>
                         <td><%= el.name %></td>
-                        <td><%= el.stock %></td>
                         <td><%= el.price %></td>
-                        <td>
-                            <a href="/shoes/<%= el.id %>/detail">
-                                <button class="btn btn-primary">Detail</button>
-                            </a>
-                        </td>
+                        <td><%= el.amount %></td>
+                        <td><%= el.totalPrice %></td>
                     </tr>
                 <% }) %> 
             </tbody>
           </table>
+          <div class="text-center">
+            <a href="/invoice/<%= userId %>">
+                <button>Print Invoice</button>
+            </a>
+          </div>
     </div>
 </body>
 </html>
