@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    totalPrice(price, amount){
+      return Number(amount) * (price) ;
+    }
   }
   Transactions.init({
     ShoeId: DataTypes.INTEGER,

@@ -5,13 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="shortcut icon" href="#">
     <title>Home</title>
 </head>
 <body>
     <%- include('partials/navbar') %> 
-    <br>
-    <h1 class="text-center">Home</h1>
+<div class="p-5 text-center bg-image rounded-3" style="
+    background-image: url('https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1247,c_limit/5c79dcbf-e724-409c-97e2-c83d5b008c26/nike-basketball.jpg');
+    height: 600px;
+  ">
+  <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+    <div class="d-flex justify-content-center align-items-center" style="height: 500px;">
+      <div class="text-white">
+        <h1 class="mb-3">Welcome to HacktivSport</h1>
+        <h4 class="mb-3">We provide shoe that will not let you down on the court!</h4>
+        <% if (!role) { %>
+        <br><p>Login to continue</p>
+        <a class="btn btn-outline-light btn-lg" href="/login" role="button">Login</a>
+        <br><br><p>Do not have an account yet?</p>
+        <a class="btn btn-outline-light btn-lg" href="/register" role="button">Register</a>
+        <% } else { %>  
+            <br><p>Shoes</p>
+            <a class="btn btn-outline-light btn-lg" href="/shoes" role="button">Shoe List</a>
+            <br><br><p>Brands</p>
+            <a class="btn btn-outline-light btn-lg" href="/brands" role="button">Brand List</a>
+        <% } %>  
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- <h1 class="text-center">Home</h1>
     <div class="text-center">
         <a href="/brands">
             <button>Brand List</button>
@@ -19,6 +41,6 @@
         <a href="/shoes">
             <button>Shoe List</button>
         </a>
-    </div>
+    </div> -->
 </body>
 </html>
