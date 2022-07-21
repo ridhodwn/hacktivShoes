@@ -1,4 +1,5 @@
 const express = require('express') ;
+const session = require('express-session');
 const app = express() ;
 const port = 3000 ;
 const router = require('./routes/router')
@@ -6,6 +7,7 @@ const session = require('express-session')
 
 app.set('view engine', 'ejs') ;
 app.use(express.urlencoded({extended:true}))
+
 app.use(express.json())
 app.use(session({
     secret: 'secretaaaa',
@@ -16,6 +18,7 @@ app.use(session({
     }
 }))
 app.use(express.static("."));
+
 app.use(router) ;
 // app.get('/shoes', Controller.home)
 

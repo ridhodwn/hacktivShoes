@@ -1,7 +1,31 @@
 const Controller = require('../controllers/controller') ;
+const UserController = require('../controllers/user-controller');
 const router = require('express').Router();
 // const session = require('express-session')
 
+
+//Get /register
+router.get('/register', UserController.registerForm);
+//Post /register
+router.post('/register', UserController.postRegister);
+
+//Get /login
+router.get('/login', UserController.loginForm);
+//Post /login
+router.post('/login', UserController.postLogin);
+
+const isLoggedIn = function(req, res, next) {
+    if(!req.session.userId) {
+        const error = 'Please login first';
+        res.redirect(`/login?error=${error}`);
+    } else {
+        next();
+    }
+};
+
+router.use(isLoggedIn);
+
+router.get('/logout', UserController.getLogOut);
 
 router.get('/', Controller.home)
 //Register
