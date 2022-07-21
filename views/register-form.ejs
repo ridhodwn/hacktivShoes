@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="shortcut icon" href="#">
+    <title>Register</title>
+</head>
+<body>
+
+    <h1 class="text-center mt-5">Registration</h1>
+    <br>
+    <div class="container col-md-5 mx-auto">
+        <form method="post" action="/register">
+            <div class="form-group">
+              <label>Username</label><br>
+              <input type="text" class="form-control" name="username" placeholder="Example: Ronald">
+            </div>
+            <div class="form-group">
+              <label>E-mail</label><br>
+              <input type="text" class="form-control" name="email" placeholder="Example: Ronald@gmail.com">
+            </div>
+            <div class="form-group">
+              <label>Password</label><br>
+              <input type="password" class="form-control" name="password" placeholder="Example: securePassword123">
+            </div>
+            <div class="form-group">
+                <label>Role</label><br>
+                <input type="text" class="form-control" name="role" placeholder="Example: admin">
+              </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+
+</body>
+</html>
